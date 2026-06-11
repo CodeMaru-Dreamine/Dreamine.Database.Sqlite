@@ -7,8 +7,15 @@ using System.Data;
 
 namespace Dreamine.Database.Sqlite;
 
+/// <summary>
+/// Provides a SQLite database provider implementation.
+/// </summary>
 public sealed class SqliteDatabaseProvider : DatabaseProviderBase
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SqliteDatabaseProvider"/> class.
+    /// </summary>
+    /// <param name="connectionString">The SQLite connection string.</param>
     public SqliteDatabaseProvider(string connectionString)
         : base(connectionString)
     {
@@ -73,5 +80,10 @@ public sealed class SqliteDatabaseProvider : DatabaseProviderBase
         }
 
         return "TEXT";
+    }
+
+    protected override string BuildPrimaryKeySql(DatabasePropertyMap property)
+    {
+        return property.IsGenerated ? " PRIMARY KEY AUTOINCREMENT" : " PRIMARY KEY";
     }
 }
